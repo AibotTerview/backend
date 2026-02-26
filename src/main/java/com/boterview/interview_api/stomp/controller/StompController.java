@@ -47,6 +47,12 @@ public class StompController {
 		}
 	}
 
+	@MessageMapping("/signal/ready")
+	public void handleReady(Envelope envelope) {
+		String roomId = envelope.getRoomId();
+		messagingTemplate.convertAndSend("/topic/ready/" + roomId, envelope);
+	}
+
 	@MessageMapping("/signal/webrtc/offer")
 	public void handleWebRtcOffer(Envelope envelope) {
 		String roomId = envelope.getRoomId();
